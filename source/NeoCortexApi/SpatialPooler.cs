@@ -266,6 +266,7 @@ namespace NeoCortexApi
             //
             // Here we boost calculated overlaps. This is related to Homeostatic Plasticity Mechanism.
             // Boosting factors are calculated in the previous cycle.
+            
             if (learn)
             {
                 boostedOverlaps = ArrayUtils.Multiply(this.connections.BoostFactors, overlaps);
