@@ -1,0 +1,37 @@
+Analyse and Describe Boosting Algorithm
+
+1.Boosting
+  The main idea behing boosting is the SDRs of symbols will use a wider range of cells by making the most active cells less active and the least active cells more active.
+  This is done via scalar multiplication of a boosting matrix over the spatial pooler to change permeances of each cells.
+
+First we need to understand Neocortex
+Neocortex: 
+It is like a sheet of napkin squeezed into a skull just below the dura matter of the skull consisting of all the areas required for cognition.To understand the basis of artificial general intelligence
+we need to decipher the intelligence of neocortex.
+
+It mainly consists of 6 steps
+1. Sparse Distributed Representation
+2. Encoding
+3. Spatial Pooling
+4. Learning
+5. Boosting
+6. Temporal Pooling
+
+By using Spatial Pooling we will do the above 6 steps. So we need to get idea about Spatial Pooling
+
+While going through the document I come to know about what exactly Spatial Poolong is
+
+It is the layer that processes the Spatial features of the input data in HTM Algorithm.
+
+Spatial Pooling Algorithm Important terms
+
+1. Column
+2. Mini-column
+3. Inhibition
+4. Inhinition radius
+5. Active duty cycle
+6. Overlap duty cycle
+7. Receptive field 
+8. Permanence value
+9. Permanence threshold
+10. Synapse
