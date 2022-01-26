@@ -35,3 +35,62 @@ Spatial Pooling Algorithm Important terms
 8. Permanence value
 9. Permanence threshold
 10. Synapse
+
+By following this resources I had learned more about Spatial Pooler and Boosting:
+
+1. Boosting by HTM school youtube
+    It is used to help to change the overlap score before the inhibition occurs giving leass active columns a better chance to express themselves
+
+2. Hierarchal Temporal Memory by medium.com webpost
+
+    The main idea is to understand the basic of artificial general intelligence we need to decrypt the intelligence of NeoCortex
+
+As I already mentioned in the above that Neocortex mainly consists of 6 steps
+
+The Human brain majorly consists of the cerebrum, the cerebellum, Limbic System and the Brain Stem. The cerebral cortex is divided into four sections, called “lobes”: the frontal lobe, parietal lobe, occipital lobe, and temporal lobe. Frontal Lobe is associated with reasoning, planning, parts of speech, movement, emotions, and problem solving, Parietal Lobe is associated with movement, orientation, recognition, perception of stimuli. Occipital Lobe is associated with visual processing and Temporal Lobe is associated with perception and recognition of auditory stimuli, memory, and speech. This cerebral cortex is also termed as the Neocortex(newer cortex) regarded as the most recently evolved part of the cortex.The cerebellum is associated with regulation and coordination of movement, posture, and balance. The limbic system, often referred to as the “emotional brain”, is found buried within the cerebrum. This system contains the thalamus, hypothalamus, amygdala, and hippocampus. Underneath the limbic system is the brain stem. This structure is responsible for basic vital life functions such as breathing, heartbeat, and blood pressure.So,the idea of newer intelligence comes from the Neocortex. Neocortex or the cerebrum is a sheet of napkin squeezed into a skull just below the dura matter of the skull consisting of all the lobes.
+
+Vernon Mountcastle proposed a single powerful algorithm implemented by every region of cortex. If you connect regions of cortex together in a suitable hierarchy and provide a stream of input, it will learn about its environment. It’s quiet inside.The brain learns only by learnings, it has no knowledge of itself. To explain it in a simple way lets say that, both auditory cortex and visual cortex are unified by one algorithm. The surprising result is that the ferrets develop functioning visual pathways in the auditory portions of their brains. In other words, they see with brain tissue that normally hears sounds i.e the cortex does something universal that can be applied to any type of sensory or motor system. Similar experiments have been done with other senses and brain regions. For instance, pieces of rat visual cortex can be transplanted around the time of birth to regions where the sense of touch is usually represented. As the rat matures, the transplanted tissue processes touch rather than vision. Cells were not born to specialize in vision or touch or hearing. Human neocortex is every bit as plastic. Adults who are born deaf process visual information in areas that normally become auditory regions. Patterns are all the brain knows about. Brains are pattern machines. It’s not incorrect to express the brain’s functions in terms of hearing or vision, but at the most fundamental level, patterns are the name of the game. No matter how different the activities of various cortical areas may seem from each other, the same basic cortical algorithm is at work. Helen Keller had no sight and no hearing, yet she learned language and became a more skillful writer than most sighted and hearing people. Here was a very intelligent person without two of our main senses, yet the incredible flexibility of the brain allowed her to perceive and understand the world as individuals with all five senses do.
+
+The basic principle of HTM (Hierarchical Temporal Memory)/CLA (Cortical Learning Algorithm) is Temporal Memory i.e the memory of sequences.
+
+Let's see the 6 steps in detail
+
+1.Sparse Distributed Representations: 
+
+   SDRs are the language of brain. The reason why it is termed as Sparse is because of the fact that only few neurons fire when a cognitive task is performed i.e. if you take a snapshot of neurons in the brain,    it is highly likely that you will only see less than 2% neurons in an active state (Experimental evidence of Sparse firing in the neocortex). An SDR consists of thousands of bits where at any point in time a    small percentage of the bits are 1’s and the rest are 0’s. The bits in an SDR correspond to neurons in the brain, a 1 being a relatively active neuron and a 0 being a relatively inactive neuron.
+There are certain properties of SDRs :
+   1.Capacity of SDRs and the probability of mismatches
+   2.Robustness of SDRs and the probability of error with noise
+   3.Reliable classification of a list of SDR vectors
+   4.Unions of SDRs
+   5.Robustness of unions in the presence of noise
+
+2.Encoder:
+
+  The encoder converts the native format of the data into an SDR that can be fed into an HTM system. The encoder is responsible for determining which output bits should be ones, and which should be zeros, for a   given input value in such a way as to capture the important semantic characteristics of the data. Similar input values should produce highly overlapping SDRs.
+
+3.Spatial Pooling:
+
+  Spatial pooling Algorithm is for solving problems to represent the input active neurons (comping from sensory or motor organs) to make that the cortex learn the pattern of sequences. It accepts the input   vector of different sizes and represents it into sparse vectors of same size(It kind of normalises it). The output of the Spatial Pooler represents the mini columns i.e the pyramidal neuron in the cortices.   It posses certain properties like maintaining a fixed sparsity i.e no matter how many bits are on and off in the input the spatial pooler need to maintain the fixed sparsity and to maintain the overlap   properties i.e two similar inputs should produce similar outputs in the columns.
+  The spatial pooler takes the input data and translates the incoming data into active columns
+
+4.Learning:
+  Learning happens only in those columns of the Spatial Pooler which are active. All the connections that are falling in the input space, the permeance value will increase for them i,e the synaptic connection   between them will strengthen while any connections that fall outside of the input space for those the permeance value will be decremented . Learning Spatial Pooler learns better in comparison to the Random   Spatial Pooler
+
+5.Boosting:
+ 
+  In order for a column in a Spatial pooler to exist it should be a winning column i.e the overlap score should be above some threshold value while non-winning columns are inhibited from learning. Only the    winner columns can update their permanence values. Boosting helps to change the overlap score before the inhibition occurs giving less active columns a better chance to express themselves and diminishing    columns that seem overactive
+
+6.Temporal Pooling:
+
+  Temporal Pooling enables us to understand the sequential pattern over time. It learns the sequences of the active column from the Spatial Pooler and predicts what spatial pattern in coming next based on the   temporal context of each input.
+
+
+
+
+
+
+
+
+
+
