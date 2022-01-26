@@ -266,6 +266,9 @@ namespace NeoCortexApi
             //
             // Here we boost calculated overlaps. This is related to Homeostatic Plasticity Mechanism.
             // Boosting factors are calculated in the previous cycle.
+            // Methods related to Boosting 
+            // 1.BumpUpWeakColumns
+            // 2.UpdateBoostFactors
             
             if (learn)
             {
