@@ -182,6 +182,24 @@ Conclusion: After the stability becomes "TRUE" the program is Not Stable and aga
 
 I am adding Output ScreenShots.
 
+Chnaged the Boosting Parameters 
+
+1. double minOctOverlapCycles=2.0
+2. double maxBoost=4.0
+
+When changed these Boosting parameters I had found that the system become stable at [cycle=0153, i=82, cols=:41 s=100] and the stability becomes "True"
+So after the system comes to stable state It again going to Unstable State at [Cycle  ** 182 ** Stability: False] [cycle=0182, i=0, cols=:41 s=100] and again going to Stable state at [cycle=0231, i=36, cols=:41 s=100] and remains in Stable State until the final Iteration.
+
+By comparing with the previous states when we increase the minOctOverlapCycles and decrease maxBoost the system got stable at same point with the previous one but the system went to unstable state at Cycle 182.So by increasing minOctOverlapCycles and decreasing maxBoost the system is going to unstable with an increment of one cycle.But again the system comes to Stable State with the decrement of 50 cycles compared to previous one.
+ 
+Observations:
+1.The time taken to run the complete program is 56:00 mnts
+2.In previous case time taken to run the complete program is 2:00 Hrs
+3.I found that the system became Stable at same position [cycle=0153, i=82, cols=:41 s=100]--Same position occured with the given configuration
+
+So by changing the parameters from double minOctOverlapCycles=1.0 to double minOctOverlapCycles=2.0 and double maxBoost=5.0 to double maxBoost=4.0 the system is stable at same point 
+
+I am adding Output ScreenShots.
 
 
 
