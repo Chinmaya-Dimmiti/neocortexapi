@@ -169,6 +169,7 @@ Improved HTM Spatial Pooler with Homeostatic Plasticity Control -Professor Dobri
 		    The SP has entered the stable stage when the controller detects that all minicolumns are almost evenly employed and all visible SDRs are encoded with roughly the same                     amount of active mini-columns. 
 	            The SP will then exit the neonatal stage and resume normal operations, albeit without the boosting.
 
+OBSERVATION 1:
 
 Analysed SpatialPatternLearning and found stability with the given configuration and paramaters.
 
@@ -181,6 +182,8 @@ Then again at [cycle=270, i=23, cols=41, s=100] the program went to STABLE STATE
 Conclusion: After the stability becomes "TRUE" the program is Not Stable and again it is going to UNSTABLE STATE[FALSE] state because of weak columns and due to high active columns again the system is coming to STABLE STATE[TRUE}
 
 I am adding Output ScreenShots.
+
+OBSERVATION 2:
 
 Chnaged the Boosting Parameters 
 
@@ -198,6 +201,27 @@ Observations:
 3.I found that the system became Stable at same position [cycle=0153, i=82, cols=:41 s=100]--Same position occured with the given configuration
 
 So by changing the parameters from double minOctOverlapCycles=1.0 to double minOctOverlapCycles=2.0 and double maxBoost=5.0 to double maxBoost=4.0 the system is stable at same point 
+
+I am adding Output ScreenShots.
+
+OBSERVATION 3:
+
+Changed Boosting Parameters
+
+1. double minOctOverlapCycles=2.0
+2. double maxBoost=8.0
+
+At starting I found that the system is in unstable state and some columns are completely not representing any SDR values and the program is running very slow.
+After completing 40 cycles then the system is representing complete values but in Unstable State and the system speed also increased.
+
+
+I made maxBoost value double of the previous value and started running the SpatialPatternLearning.By comparing with the previous maxBoost value again the System went to Stable State at [cycle=0153, i=82, cols=:41 s=100]
+
+Now the system went to Unstable state at [cycle=0181, i=35, cols=:41 s=95.1219512195122] and remains Unstable until [cycle=0231, i=35, cols=:41 s=100] and again went to Stable State at same cycle compared to previous one [cycle=0231, i=36, cols=:41 s=100]
+
+Nothing have been changed while doubling the Boosting Value to maxBoost=8.0. 
+
+Need to do more changes and observe how the system is performing.
 
 I am adding Output ScreenShots.
 
