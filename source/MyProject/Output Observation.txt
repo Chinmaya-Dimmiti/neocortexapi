@@ -1,0 +1,4 @@
+Output of maxboost=1 & dutycycles=50000 IsBUWC:True
+After changing the maxboost to 1 and dutycycles to 50000 the system went to stable state at [cycle=0096, i=1, cols=:40 s=100] and went to unstableState at Cycle 103 and again reached to stablestate at Cycle 232 
+The total time taken to complete the program is 46:00 mnts
+

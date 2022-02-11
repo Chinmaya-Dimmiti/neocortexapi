@@ -231,7 +231,7 @@ namespace NeoCortexApi.Entities
         /// <summary>
         /// Controls if bumping-up of weak columns shell be done.
         /// </summary>
-        //public bool IsBumpUpWeakColumnsDisabled { get; set; } = false;
+        public bool IsBumpUpWeakColumnsDisabled { get; set; } = false;
 
         /// <summary>
         /// Period count which is the number of cycles between updates of inhibition radius and min. duty cycles.
