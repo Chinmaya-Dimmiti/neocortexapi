@@ -22,9 +22,9 @@ namespace NeoCortexApiSample
 
             // Used as a boosting parameters
             // that ensure homeostatic plasticity effect.
-            // changed Boosting parameters (maxBoost=1.0)
+            // changed Boosting parameters (maxBoost=5.0)
             double minOctOverlapCycles = 1.0;
-            double maxBoost = 1.0;
+            double maxBoost = 5.0;
 
             // We will use 200 bits to represent an input vector (pattern).
             int inputBits = 200;
