@@ -22,9 +22,9 @@ namespace NeoCortexApiSample
 
             // Used as a boosting parameters
             // that ensure homeostatic plasticity effect.
-            // changed Boosting parameters (maxBoost=5.0)
+            // changed Boosting parameters (maxBoost=10.0)
             double minOctOverlapCycles = 1.0;
-            double maxBoost = 5.0;
+            double maxBoost = 10.0;
 
             // We will use 200 bits to represent an input vector (pattern).
             int inputBits = 200;
@@ -34,12 +34,12 @@ namespace NeoCortexApiSample
 
             //
             // This is a set of configuration parameters used in the experiment.
-            // Changed DutyCyclePeriod=50000
+            // Changed DutyCyclePeriod=100000
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
-                DutyCyclePeriod = 50000,
+                DutyCyclePeriod = 100000,
                 IsBumpUpWeakColumnsDisabled = true,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
