@@ -387,27 +387,7 @@ namespace NeoCortexApi
             {
                 UpdateMinDutyCyclesLocal(c);
             }
-            var filepath = "UpdateMinDutyCycles_analysis.csv";
-            string MinOverlapDutyCycles_string = String.Join(",", c.HtmConfig.MinOverlapDutyCycles.Select(x => x.ToString()).ToArray());
-            string MinActiveDutyCycles_string = String.Join(",", c.HtmConfig.MinActiveDutyCycles.Select(x => x.ToString()).ToArray());
-            if (!File.Exists(filepath))
-            {
-                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
-                FileMode.Create, FileAccess.Write)))
-                {
-                    writer.WriteLine("sep=:");
-                    writer.WriteLine("MinOverlapDutyCycles_string: MinActiveDutyCycles_string");
-                    writer.WriteLine($"{MinOverlapDutyCycles_string}: {MinActiveDutyCycles_string}");
-                }
-            }
-            else
-            {
-                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
-                FileMode.Append, FileAccess.Write)))
-                {
-                    writer.WriteLine($"{MinOverlapDutyCycles_string}: {MinActiveDutyCycles_string}");
-                }
-            }
+            
         }
 
         /// <summary>
@@ -508,30 +488,7 @@ namespace NeoCortexApi
             c.HtmConfig.OverlapDutyCycles = CalcEventFrequency(c.HtmConfig.OverlapDutyCycles, overlapFrequencies, period);
 
             c.HtmConfig.ActiveDutyCycles = CalcEventFrequency(c.HtmConfig.ActiveDutyCycles, activeColFrequencies, period);
-            var filepath = "UpdateDutyCycles_analysis.csv";
-            string OverlapDutyCycles_string = String.Join(",", c.HtmConfig.OverlapDutyCycles.Select(x => x.ToString()).ToArray());
-            string ActiveDutyCycles_string = String.Join(",", c.HtmConfig.ActiveDutyCycles.Select(x => x.ToString()).ToArray());
-            string overlapFrequencies_string = String.Join(",", overlapFrequencies.Select(x => x.ToString()).ToArray());
-            string activeColFrequencies_string = String.Join(",", activeColFrequencies.Select(x => x.ToString()).ToArray());
-            if (!File.Exists(filepath))
-            {
-                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
-                 FileMode.Create, FileAccess.Write)))
-                {
-                    writer.WriteLine("sep=:");
-                    writer.WriteLine("overlapFrequencies:activeColFrequencies:OverlapDutyCycles: ActiveDutyCycles");
-                    writer.WriteLine($"{overlapFrequencies_string}:{activeColFrequencies_string}:{OverlapDutyCycles_string}: {ActiveDutyCycles_string}");
-                }
-            }
-
-            else
-            {
-                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,FileMode.Append, FileAccess.Write)))
-                {
-                    writer.WriteLine($"{overlapFrequencies_string}:{activeColFrequencies}:{OverlapDutyCycles_string}:{ActiveDutyCycles_string}");
-                }
-
-            }
+           
         }
 
 
@@ -694,26 +651,7 @@ namespace NeoCortexApi
                 Pool pool = col.ProximalDendrite.RFPool;
                 double[] perm = pool.GetSparsePermanences();
                 ArrayUtils.RaiseValuesBy(c.HtmConfig.SynPermBelowStimulusInc, perm);
-                string perm_string = String.Join(",", perm.Select(x => x.ToString()).ToArray());
-                var filepath = "BumpUpWeakColumns_analysis.csv";
-                if (!File.Exists(filepath))
-                {
-                    using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
-                    FileMode.Create, FileAccess.Write)))
-                    {
-                        writer.WriteLine("sep=:");
-                        writer.WriteLine("c.HtmConfig.SynPermBelowStimulusInc: perm");
-                        writer.WriteLine($"{c.HtmConfig.SynPermBelowStimulusInc.ToString()}: {perm_string}");
-                    }
-                }
-                else
-                {
-                    using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
-                    FileMode.Append, FileAccess.Write)))
-                    {
-                        writer.WriteLine($"{c.HtmConfig.SynPermBelowStimulusInc.ToString()}: {perm_string}");
-                    }
-                }
+                
                 int[] indexes = pool.GetSparsePotential();
 
                 UpdatePermanencesForColumnSparse(c, perm, col, indexes, true);
@@ -1251,28 +1189,7 @@ namespace NeoCortexApi
             ArrayUtils.SetIndexesTo(boostFactors, idxOfActiveColumns.ToArray(), 1.0d);
 
             c.BoostFactors = boostFactors;
-            string activeDutyCycles_string = String.Join(",", activeDutyCycles.Select(x => x.ToString()).ToArray());
-            string minActiveDutyCycles_string = String.Join(",", minActiveDutyCycles.Select((x) => x.ToString()).ToArray());
-            string idxOfActiveColumns_string = String.Join(",", idxOfActiveColumns.Select(x => x.ToString()).ToArray());
-            string boostFactors_string = String.Join(",", boostFactors.Select(x => x.ToString()).ToArray());
-            var filepath = "UpdateBoostFactors.scv";
-            if (!File.Exists(filepath))
-            {
-                using (StreamWriter writer = new StreamWriter(new FileStream(filepath, FileMode.Create, FileAccess.Write)))
-                {
-                    writer.WriteLine("sep=:");
-                    writer.WriteLine("acticeDutyCycles: minActiveDutyCycles: idxOfActiveColumns: boostfactors");
-                    writer.WriteLine($"{activeDutyCycles_string}: {minActiveDutyCycles_string}: {idxOfActiveColumns_string}: {boostFactors_string}");
-                }
-            }
-            else
-            {
-                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
-                FileMode.Append, FileAccess.Write)))
-                {
-                    writer.WriteLine($"{activeDutyCycles_string}: {minActiveDutyCycles_string}: {idxOfActiveColumns_string}: {boostFactors_string}");
-                }
-            }
+            
         }
 
 

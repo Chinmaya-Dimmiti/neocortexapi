@@ -23,9 +23,9 @@ namespace NeoCortexApiSample
 
             // Used as a boosting parameters
             // that ensure homeostatic plasticity effect.
-            // changed Boosting parameters (maxBoost=1.0)
+            // changed Boosting parameters (maxBoost=20.0)
             double minOctOverlapCycles = 1.0;
-            double maxBoost = 1.0;
+            double maxBoost = 20.0;
 
             // We will use 200 bits to represent an input vector (pattern).
             int inputBits = 200;
@@ -40,7 +40,7 @@ namespace NeoCortexApiSample
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
-                DutyCyclePeriod = 500,
+                DutyCyclePeriod = 100000,
                 //IsBumpUpWeakColumnsDisabled = true,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
@@ -165,12 +165,7 @@ namespace NeoCortexApiSample
             // Learning process will take 1000 iterations (cycles)
             int maxSPLearningCycles = 1000;
 
-            var filepath = "Results.csv";
-            using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
-                 FileMode.Create, FileAccess.Write)))
-            {
-                writer.WriteLine("sep=:");
-                writer.WriteLine("cycle:Stability: i: cols: s:SDR ");
+           
                 for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
                 {
                     Debug.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
@@ -194,8 +189,7 @@ namespace NeoCortexApiSample
                         similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
 
                         Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
-                        writer.WriteLine($"{cycle.ToString("D4")}:{isInStableState}:{input},{actCols.Length}:{similarity}:{Helpers.StringifyVector(actCols)}");
-                        prevActiveCols[input] = activeColumns;
+                        
                         prevSimilarity[input] = similarity;
                     }
                 }
@@ -203,4 +197,3 @@ namespace NeoCortexApiSample
         }
     }
 
-}
