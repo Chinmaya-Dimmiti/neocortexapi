@@ -28,10 +28,10 @@ namespace NeoCortexApiSample
             double maxBoost = 100.0;
 
             // We will use 200 bits to represent an input vector (pattern).
-            int inputBits = 200;
+            int inputBits = 100;
 
             // We will build a slice of the cortex with the given number of mini-columns
-            int numColumns = 2048;
+            int numColumns = 1024;
 
             //
             // This is a set of configuration parameters used in the experiment.
@@ -50,12 +50,12 @@ namespace NeoCortexApiSample
                 LocalAreaDensity = -1,
                 ActivationThreshold = 10,
 
-                MaxSynapsesPerSegment = (int)(0.01 * numColumns),
+                MaxSynapsesPerSegment = (int)(0.02 * numColumns),
                 Random = new ThreadSafeRandom(42),
                 StimulusThreshold = 10,
             };
 
-            double max = 100;
+            double max = 50;
 
             //
             // This dictionary defines a set of typical encoder parameters.
