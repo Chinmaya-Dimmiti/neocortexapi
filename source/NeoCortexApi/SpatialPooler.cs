@@ -488,7 +488,64 @@ namespace NeoCortexApi
             c.HtmConfig.OverlapDutyCycles = CalcEventFrequency(c.HtmConfig.OverlapDutyCycles, overlapFrequencies, period);
 
             c.HtmConfig.ActiveDutyCycles = CalcEventFrequency(c.HtmConfig.ActiveDutyCycles, activeColFrequencies, period);
+            
+            // Creating Csv File to Analyze the Frequencies
            
+            string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
+            string FolderName = "UpdateDutyCycles"; // $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss-fff}"; 
+            string CurrentDirectoryPath = Path.Join(CurrentDirectory, FolderName);
+            if (!Directory.Exists(CurrentDirectoryPath))
+            {
+                Directory.CreateDirectory(CurrentDirectoryPath);
+            }
+            string filepath = "";
+            if (c.HtmConfig.cyclesVal == 0)
+            {
+                string TempPath = "UpdateDutyCycles_analysis_0" + ".csv";
+                filepath = Path.Join(CurrentDirectoryPath, TempPath);
+            }
+            else
+            {
+                string TempPath = "UpdateDutyCycles_analysis_" + c.HtmConfig.cyclesVal.ToString() + ".csv";
+                filepath = Path.Join(CurrentDirectoryPath, TempPath);
+            }
+
+            if (!File.Exists(filepath))
+            {
+                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
+                FileMode.Create, FileAccess.Write)))
+                {
+                    writer.WriteLine("sep=:");
+                    writer.WriteLine("Input: OverlapDutyCycles: ActiveDutyCycles");
+                    //var numbersAndWords = overlapFrequencies.Zip(activeColFrequencies, c.HtmConfig.OverlapDutyCycles, c.HtmConfig.ActiveDutyCycles, (of,af,oc,ac ) => new { overlapFrequencie = of, activeColFrequencie = af, OverlapDutyCycles =oc, ActiveDutyCycles = ac});
+                    //var OandAFrequencies = overlapFrequencies.Zip(activeColFrequencies, (n, w) => new { overlapFrequencie = n, activeColFrequencie = w });
+                    var OandACycles = c.HtmConfig.OverlapDutyCycles.Zip(c.HtmConfig.ActiveDutyCycles, (n, w) => new { OverlapDutyCycles = n, ActiveDutyCycles = w });
+                    foreach (var nw in OandACycles)
+                    {
+                        writer.WriteLine($"{c.HtmConfig.count}:{nw.OverlapDutyCycles}: {nw.ActiveDutyCycles}");
+                    }
+                }
+            }
+            else
+            {
+                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
+                FileMode.Append, FileAccess.Write)))
+                {
+                    var OandACycles = c.HtmConfig.OverlapDutyCycles.Zip(c.HtmConfig.ActiveDutyCycles, (n, w) => new { OverlapDutyCycles = n, ActiveDutyCycles = w });
+                    foreach (var nw in OandACycles)
+                    {
+                        writer.WriteLine($"{c.HtmConfig.count}:{nw.OverlapDutyCycles}: {nw.ActiveDutyCycles}");
+                    }
+                }
+            }
+
+
+
+
+            //string OverlapDutyCycles_string = String.Join(",", c.HtmConfig.OverlapDutyCycles.Select(x => x.ToString()).ToArray());
+            // string ActiveDutyCycles_string = String.Join(",", c.HtmConfig.ActiveDutyCycles.Select(x => x.ToString()).ToArray());
+            //string overlapArray_string = String.Join(",", overlapFrequencies.Select(x => x.ToString()).ToArray());
+            //string activeArray_string = String.Join(",", activeColFrequencies.Select(x => x.ToString()).ToArray());
         }
 
 
@@ -644,7 +701,9 @@ namespace NeoCortexApi
             if (c.HtmConfig.IsBumpUpWeakColumnsDisabled)
                 return;
             var weakColumns = c.HtmConfig.Memory.Get1DIndexes().Where(i => c.HtmConfig.OverlapDutyCycles[i] < c.HtmConfig.MinOverlapDutyCycles[i]).ToArray();
-
+            //string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
+            // string CurrentDirectoryPath = Path.Join(CurrentDirectory, "BumpUpWeakColumns", $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss-fff}");
+            // System.IO.Directory.CreateDirectory(CurrentDirectoryPath);
             for (int i = 0; i < weakColumns.Length; i++)
             {
                 Column col = c.GetColumn(weakColumns[i]);
@@ -652,7 +711,9 @@ namespace NeoCortexApi
                 Pool pool = col.ProximalDendrite.RFPool;
                 double[] perm = pool.GetSparsePermanences();
                 ArrayUtils.RaiseValuesBy(c.HtmConfig.SynPermBelowStimulusInc, perm);
-                
+                string perm_string = String.Join(",", perm.Select(x => x.ToString()).ToArray());
+
+
                 int[] indexes = pool.GetSparsePotential();
 
                 UpdatePermanencesForColumnSparse(c, perm, col, indexes, true);
@@ -1191,7 +1252,55 @@ namespace NeoCortexApi
             ArrayUtils.SetIndexesTo(boostFactors, idxOfActiveColumns.ToArray(), 1.0d);
 
             c.BoostFactors = boostFactors;
-            
+
+            // Creating Csv File to Analyze the Frequencies
+            string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
+            string FolderName = "UpdateBoostFactors"; // $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss-fff}"; 
+            string CurrentDirectoryPath = Path.Join(CurrentDirectory, FolderName);
+            if (!Directory.Exists(CurrentDirectoryPath))
+            {
+                Directory.CreateDirectory(CurrentDirectoryPath);
+            }
+            string filepath = "";
+            if (c.HtmConfig.cyclesVal == 0)
+            {
+                string TempPath = "UpdateBoostFactors_analysis_0" + ".csv";
+                filepath = Path.Join(CurrentDirectoryPath, TempPath);
+            }
+            else
+            {
+                string TempPath = "UpdateBoostFactors_analysis_" + c.HtmConfig.cyclesVal.ToString() + ".csv";
+                filepath = Path.Join(CurrentDirectoryPath, TempPath);
+            }
+            if (!File.Exists(filepath))
+            {
+                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
+                FileMode.Create, FileAccess.Write)))
+                {
+                    writer.WriteLine("sep=:");
+                    writer.WriteLine("Input: activeDutyCycles: boostFactors");
+
+                    var OandBValues = activeDutyCycles.Zip(boostFactors, (n, w) => new { activeDutyCycle = n, boostFactor = w });
+                    foreach (var nw in OandBValues)
+                    {
+                        writer.WriteLine($"{c.HtmConfig.count}:{nw.activeDutyCycle}: {nw.boostFactor}");
+                    }
+
+                }
+            }
+            else
+            {
+                using (StreamWriter writer = new StreamWriter(new FileStream(filepath,
+                FileMode.Append, FileAccess.Write)))
+                {
+                    var OandBValues = activeDutyCycles.Zip(boostFactors, (n, w) => new { activeDutyCycle = n, boostFactor = w });
+                    foreach (var nw in OandBValues)
+                    {
+                        writer.WriteLine($"{c.HtmConfig.count}:{nw.activeDutyCycle}: {nw.boostFactor}");
+                    }
+                }
+            }
+
         }
 
 

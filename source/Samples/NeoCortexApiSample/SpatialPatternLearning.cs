@@ -1,4 +1,5 @@
-﻿using NeoCortexApi;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using NeoCortexApi;
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
@@ -8,13 +9,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+{
 
+}
 namespace NeoCortexApiSample
 {
     /// <summary>
     /// Implements an experiment that demonstrates how to learn spatial patterns.
     /// SP will learn every presented input in multiple iterations.
     /// </summary>
+
     public class SpatialPatternLearning
     {
         public void Run()
@@ -23,9 +27,11 @@ namespace NeoCortexApiSample
 
             // Used as a boosting parameters
             // that ensure homeostatic plasticity effect.
-            // changed Boosting parameters (maxBoost=100.0)
+            // changed Boosting parameters (maxBoost=10.0)
             double minOctOverlapCycles = 1.0;
-            double maxBoost = 100.0;
+            double maxBoost = 10.0;
+
+            int countval = 0;
 
             // We will use 200 bits to represent an input vector (pattern).
             int inputBits = 100;
@@ -35,22 +41,23 @@ namespace NeoCortexApiSample
 
             //
             // This is a set of configuration parameters used in the experiment.
-            // Changed DutyCyclePeriod=500000
+            // Changed DutyCyclePeriod=100000
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
-                DutyCyclePeriod = 500000,
+                count = countval,
+                DutyCyclePeriod = 100000,
                 //IsBumpUpWeakColumnsDisabled = true,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
                 GlobalInhibition = true,
-                NumActiveColumnsPerInhArea = 0.04 * numColumns,
+                NumActiveColumnsPerInhArea = 0.02 * numColumns,
                 PotentialRadius = (int)(0.15 * inputBits),
                 LocalAreaDensity = -1,
                 ActivationThreshold = 10,
 
-                MaxSynapsesPerSegment = (int)(0.02 * numColumns),
+                MaxSynapsesPerSegment = (int)(0.01 * numColumns),
                 Random = new ThreadSafeRandom(42),
                 StimulusThreshold = 10,
             };
@@ -165,13 +172,25 @@ namespace NeoCortexApiSample
             // Learning process will take 1000 iterations (cycles)
             int maxSPLearningCycles = 1000;
 
-           
+            // Writing output values into Results.csv
+
+            var filepath = "Results.csv";
+            using (StreamWriter writer = new StreamWriter(new FileStream(filepath, FileMode.Create)))
+            {
+                writer.WriteLine("sep=:");
+                writer.WriteLine("cycle:Stability: i:cols: s:SDR");
                 for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
                 {
+                    cfg.cyclesVal = cycle;
+                    if (isInStableState == true)
+                    {
+                        break;
+                    }
                     Debug.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
 
                     //
                     // This trains the layer on input pattern.
+                    cfg.count = 0;
                     foreach (var input in inputs)
                     {
                         double similarity;
@@ -189,11 +208,17 @@ namespace NeoCortexApiSample
                         similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
 
                         Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
-                        
+                        writer.WriteLine($"{cycle.ToString("D4")}:{isInStableState}:{input}:{actCols.Length}:{similarity}:{Helpers.StringifyVector(actCols)}");
+                        prevActiveCols[input] = activeColumns;
+
                         prevSimilarity[input] = similarity;
+                        cfg.count++;
                     }
+
                 }
+
             }
         }
     }
+}
 
