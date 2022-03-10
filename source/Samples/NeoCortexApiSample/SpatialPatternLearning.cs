@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using NeoCortexApi;
+﻿using NeoCortexApi;
 using NeoCortexApi.Encoders;
 using NeoCortexApi.Entities;
 using NeoCortexApi.Network;
@@ -9,9 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-{
 
-}
 namespace NeoCortexApiSample
 {
     /// <summary>
@@ -30,10 +27,11 @@ namespace NeoCortexApiSample
             // changed Boosting parameters (maxBoost=10.0)
             double minOctOverlapCycles = 1.0;
             double maxBoost = 10.0;
-
             int countval = 0;
 
-            // We will use 200 bits to represent an input vector (pattern).
+
+
+            // We will use 100 bits to represent an input vector (pattern).
             int inputBits = 100;
 
             // We will build a slice of the cortex with the given number of mini-columns
@@ -41,13 +39,13 @@ namespace NeoCortexApiSample
 
             //
             // This is a set of configuration parameters used in the experiment.
-            // Changed DutyCyclePeriod=100000
+            // Changed DutyCyclePeriod=100
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
                 count = countval,
-                DutyCyclePeriod = 100000,
+                DutyCyclePeriod = 100,
                 //IsBumpUpWeakColumnsDisabled = true,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
@@ -171,7 +169,6 @@ namespace NeoCortexApiSample
 
             // Learning process will take 1000 iterations (cycles)
             int maxSPLearningCycles = 1000;
-
             // Writing output values into Results.csv
 
             var filepath = "Results.csv";
@@ -179,6 +176,8 @@ namespace NeoCortexApiSample
             {
                 writer.WriteLine("sep=:");
                 writer.WriteLine("cycle:Stability: i:cols: s:SDR");
+
+
                 for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
                 {
                     cfg.cyclesVal = cycle;
@@ -186,11 +185,13 @@ namespace NeoCortexApiSample
                     {
                         break;
                     }
+
                     Debug.WriteLine($"Cycle  ** {cycle} ** Stability: {isInStableState}");
 
                     //
                     // This trains the layer on input pattern.
                     cfg.count = 0;
+
                     foreach (var input in inputs)
                     {
                         double similarity;
@@ -210,9 +211,8 @@ namespace NeoCortexApiSample
                         Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
                         writer.WriteLine($"{cycle.ToString("D4")}:{isInStableState}:{input}:{actCols.Length}:{similarity}:{Helpers.StringifyVector(actCols)}");
                         prevActiveCols[input] = activeColumns;
-
                         prevSimilarity[input] = similarity;
-                        cfg.count++;
+
                     }
 
                 }

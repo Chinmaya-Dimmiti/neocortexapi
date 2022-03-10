@@ -269,7 +269,7 @@ namespace NeoCortexApi
             // Methods related to Boosting 
             // 1.BumpUpWeakColumns
             // 2.UpdateBoostFactors
-            
+
             if (learn)
             {
                 boostedOverlaps = ArrayUtils.Multiply(this.connections.BoostFactors, overlaps);
@@ -387,7 +387,7 @@ namespace NeoCortexApi
             {
                 UpdateMinDutyCyclesLocal(c);
             }
-            
+
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace NeoCortexApi
             // if (sourceA[i] > 0) then targetB[i] = 1;
             // This ensures that all values in overlapCycles are set to 1, if column has some overlap.
             ArrayUtils.GreaterThanXThanSetToYInB(overlaps, overlapFrequencies, 0, 1);
-          
+
             if (activeColumns.Length > 0)
             {
                 // After this step, all rows in activeCycles are set to 1 at the index of active column.
@@ -488,9 +488,8 @@ namespace NeoCortexApi
             c.HtmConfig.OverlapDutyCycles = CalcEventFrequency(c.HtmConfig.OverlapDutyCycles, overlapFrequencies, period);
 
             c.HtmConfig.ActiveDutyCycles = CalcEventFrequency(c.HtmConfig.ActiveDutyCycles, activeColFrequencies, period);
-            
             // Creating Csv File to Analyze the Frequencies
-           
+
             string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
             string FolderName = "UpdateDutyCycles"; // $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss-fff}"; 
             string CurrentDirectoryPath = Path.Join(CurrentDirectory, FolderName);
@@ -630,7 +629,7 @@ namespace NeoCortexApi
             return ArrayUtils.Average(columnsPerInput);
         }
 
- 
+
         /// <summary>
         /// It traverses all connected synapses of the column and calculates the span, which synapses
         /// span between all input bits. Then it calculates average of spans accross all dimensions. 
@@ -707,12 +706,11 @@ namespace NeoCortexApi
             for (int i = 0; i < weakColumns.Length; i++)
             {
                 Column col = c.GetColumn(weakColumns[i]);
-        
+
                 Pool pool = col.ProximalDendrite.RFPool;
                 double[] perm = pool.GetSparsePermanences();
                 ArrayUtils.RaiseValuesBy(c.HtmConfig.SynPermBelowStimulusInc, perm);
                 string perm_string = String.Join(",", perm.Select(x => x.ToString()).ToArray());
-
 
                 int[] indexes = pool.GetSparsePotential();
 

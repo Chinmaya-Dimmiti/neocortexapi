@@ -543,7 +543,7 @@ namespace NeoCortexApi.Entities
                 return false;
             if (MaxBoost != obj.MaxBoost)
                 return false;
-           
+
             if (UpdatePeriod != obj.UpdatePeriod)
                 return false;
             if (OverlapDutyCycles != null && this.OverlapDutyCycles != null)
@@ -652,7 +652,7 @@ namespace NeoCortexApi.Entities
             ser.SerializeValue(this.PredictedSegmentDecrement, writer);
             ser.SerializeValue(this.DutyCyclePeriod, writer);
             ser.SerializeValue(this.MaxBoost, writer);
-           
+
             ser.SerializeValue(this.UpdatePeriod, writer);
             ser.SerializeValue(this.OverlapDutyCycles, writer);
             ser.SerializeValue(this.ActiveDutyCycles, writer);

@@ -16,6 +16,7 @@ namespace NeoCortexApiSample
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
+
         {
             //
             // Starts experiment that demonstrates how to learn spatial patterns.
@@ -29,7 +30,6 @@ namespace NeoCortexApiSample
             //experiment.Run();
 
             //
-
             //RunMultiSimpleSequenceLearningExperiment();
 
             
