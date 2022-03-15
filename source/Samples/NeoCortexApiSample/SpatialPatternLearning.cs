@@ -174,8 +174,8 @@ namespace NeoCortexApiSample
             var filepath = "Results.csv";
             using (StreamWriter writer = new StreamWriter(new FileStream(filepath, FileMode.Create)))
             {
-                writer.WriteLine("sep=:");
-                writer.WriteLine("cycle:Stability: i:cols: s:SDR");
+                //writer.WriteLine("sep=:");
+                writer.WriteLine("cycle,Stability, i,cols, s,SDR");
 
 
                 for (int cycle = 0; cycle < maxSPLearningCycles; cycle++)
@@ -209,7 +209,7 @@ namespace NeoCortexApiSample
                         similarity = MathHelpers.CalcArraySimilarity(activeColumns, prevActiveCols[input]);
 
                         Debug.WriteLine($"[cycle={cycle.ToString("D4")}, i={input}, cols=:{actCols.Length} s={similarity}] SDR: {Helpers.StringifyVector(actCols)}");
-                        writer.WriteLine($"{cycle.ToString("D4")}:{isInStableState}:{input}:{actCols.Length}:{similarity}:{Helpers.StringifyVector(actCols)}");
+                        writer.WriteLine($"{cycle.ToString("D4")},{isInStableState},{input},{actCols.Length},{similarity},{Helpers.StringifyVector(actCols)}");
                         prevActiveCols[input] = activeColumns;
                         prevSimilarity[input] = similarity;
 
