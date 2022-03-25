@@ -24,9 +24,9 @@ namespace NeoCortexApiSample
 
             // Used as a boosting parameters
             // that ensure homeostatic plasticity effect.
-            // changed Boosting parameters (maxBoost=10.0)
+            // changed Boosting parameters (maxBoost=5.0)
             double minOctOverlapCycles = 1.0;
-            double maxBoost = 10.0;
+            double maxBoost = 5.0;
             int countval = 0;
 
 
@@ -35,18 +35,21 @@ namespace NeoCortexApiSample
             int inputBits = 100;
 
             // We will build a slice of the cortex with the given number of mini-columns
-            int numColumns = 1024;
+            int numColumns = 1042;
 
             //
             // This is a set of configuration parameters used in the experiment.
-            // Changed DutyCyclePeriod=100000
+            // Changed DutyCyclePeriod=150000
             HtmConfig cfg = new HtmConfig(new int[] { inputBits }, new int[] { numColumns })
             {
                 CellsPerColumn = 10,
                 MaxBoost = maxBoost,
                 count = countval,
-                DutyCyclePeriod = 100000,
+                DutyCyclePeriod = 10000,
+
                 //IsBumpUpWeakColumnsDisabled = true,
+                SynPermTrimThreshold = 0.08,
+                SynPermBelowStimulusInc = 0.1,
                 MinPctOverlapDutyCycles = minOctOverlapCycles,
 
                 GlobalInhibition = true,
@@ -58,7 +61,8 @@ namespace NeoCortexApiSample
                 MaxSynapsesPerSegment = (int)(0.01 * numColumns),
                 Random = new ThreadSafeRandom(42),
                 StimulusThreshold = 10,
-            };
+               
+        };
 
             double max = 50;
 
