@@ -388,7 +388,7 @@ namespace NeoCortexApi
                 UpdateMinDutyCyclesLocal(c);
             }
 
-            // Creating CSV Files to Analyze the Frequencies
+            /// Creating CSV Files to Analyze the Frequencies
             string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
             string FolderName = "UpdateMinDutyCycles";
             string CurrentDirectoryPath = Path.Join(CurrentDirectory, FolderName);
@@ -567,7 +567,7 @@ namespace NeoCortexApi
             c.HtmConfig.ActiveDutyCycles = CalcEventFrequency(c.HtmConfig.ActiveDutyCycles,activeColFrequencies,period);
             
             
-            // Creating Csv File to Analyze the Frequencies
+            /// Creating Csv File to Analyze the Frequencies
 
             string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
             string FolderName = "UpdateDutyCycles"; // $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss-fff}"; 
@@ -771,6 +771,8 @@ namespace NeoCortexApi
             // Get columns with too low overlap.
            
             var weakColumns = c.HtmConfig.Memory.Get1DIndexes().Where(i => c.HtmConfig.OverlapDutyCycles[i] < c.HtmConfig.MinOverlapDutyCycles[i]).ToArray();
+
+            /// Creating CSV File to Analyze Frequencies
     string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
     string FolderName = "BumpUpWeakColumns";
     string CurrentDirectoryPath = Path.Join(CurrentDirectory, FolderName);
@@ -1358,7 +1360,7 @@ public virtual void RaisePermanenceToThreshold(HtmConfig htmConfig, double[] per
 
             c.BoostFactors = boostFactors;
 
-            // Creating Csv File to Analyze the Frequencies
+            /// Creating Csv File to Analyze the Frequencies
             string CurrentDirectory = System.IO.Directory.GetCurrentDirectory();
             string FolderName = "UpdateBoostFactors"; // $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss-fff}"; 
             string CurrentDirectoryPath = Path.Join(CurrentDirectory, FolderName);
