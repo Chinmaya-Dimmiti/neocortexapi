@@ -20,7 +20,10 @@ namespace UnitTestsProject
         private SpatialPooler sp;
         private Connections mem;
 
-        
+        /// <summary>
+        /// create htmconfig with default parameters required for the unit tests 
+        /// and also create connection instance for spatial pooler intialization
+        /// </summary>
 
         private void InitTestSPInstance(int inputbits, int columns)
         {
@@ -47,9 +50,10 @@ namespace UnitTestsProject
             sp.Init(mem);
         }
 
-        /**
-         * Testing Boost Factors are updated as per the mathematical formula defined in UpdateBoostFactors method maxboost 10
-         */
+        /// <summary>
+        /// It makes sure that  Boost Factors are updated as per the mathematical formula defined in UpdateBoostFactors method when maxboost is 10
+        /// This test ensures that Boost Factors values are calculated as per the formula and updated accordingly.
+        /// </summary>
         [TestMethod]
         [TestCategory("UnitTest")]
         [TestCategory("Prod")]
@@ -63,24 +67,30 @@ namespace UnitTestsProject
             mem.HtmConfig.NumColumns = 10;
 
             double[] minActiveDutyCycles = new double[10];
+            // Intializing minActiveDutyCycles array of size 10 with value 0.1
             ArrayUtils.InitArray(minActiveDutyCycles, 0.1);
             mem.HtmConfig.MinActiveDutyCycles = minActiveDutyCycles;
 
             double[] activeDutyCycles = new double[10];
+            // Intializing activeDutyCycles array of size 10 with value 0.01
             ArrayUtils.InitArray(activeDutyCycles, 0.01);
             mem.HtmConfig.ActiveDutyCycles = activeDutyCycles;
+            // Expected Boost Factors values are calculated manually using the formula boost = (1-maxBoost)/minDuty * activeDutyCycle + maxBoost.
 
             double[] ExpectedBoostFactors = new double[] { 9.1, 9.1, 9.1, 9.1, 9.1, 9.1, 9.1, 9.1, 9.1, 9.1 };
+            // executing UpdateBoostFactors method with mem connection
             sp.UpdateBoostFactors(mem);
             double[] boostFactors = mem.BoostFactors;
             for (int i = 0; i < boostFactors.Length; i++)
             {
+                // Veriying absolute values of manually calculated Boost Factors vales and Boost Factor values from UpdateBoostFactors method
                 Assert.IsTrue(Math.Abs(ExpectedBoostFactors[i] - boostFactors[i]) <= 0.1D);
             }
         }
-        /**
-         * Testing Boost Factors are not updated when all minActiveDutyCycles are 0
-         */
+        /// <summary>
+        /// It makes sure that  Boost Factors are not updated when all minActiveDutyCycles are 0
+        /// This test ensures that Boost Factors values are 1
+        /// </summary>
         [TestMethod]
         [TestCategory("UnitTest")]
         [TestCategory("Prod")]
@@ -95,24 +105,29 @@ namespace UnitTestsProject
             mem.HtmConfig.NumColumns = 10;
 
             double[] minActiveDutyCycles = new double[10];
+            // Intializing minActiveDutyCycles array of size 10 with value 0
             ArrayUtils.InitArray(minActiveDutyCycles, 0);
             mem.HtmConfig.MinActiveDutyCycles = minActiveDutyCycles;
 
             double[] activeDutyCycles = new double[10];
+            // Intializing activeDutyCycles array of size 10 with value 0.1
             ArrayUtils.InitArray(activeDutyCycles, 0.1);
             mem.HtmConfig.ActiveDutyCycles = activeDutyCycles;
 
             double[] BoostFactors = new double[10];
             ArrayUtils.InitArray(BoostFactors, 0.5);
             mem.BoostFactors = BoostFactors;
-
+            // Expected Boost Factors values are same as Boost Factor array values as all minActiveDutyCycles values are 0
             double[] ExpectedBoostFactors = new double[] { 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5 };
+            // executing UpdateBoostFactors method with mem connection
             sp.UpdateBoostFactors(mem);
+            // Veriying Boost Factors values are unchanged
             Assert.IsTrue(mem.BoostFactors.SequenceEqual(ExpectedBoostFactors));
         }
-        /**
-         *  Testing Boost Factors are updated as per the mathematical formula defined in UpdateBoostFactors method maxboost 1
-         */
+        /// <summary>
+        /// It makes sure that  Boost Factors are updated as per the mathematical formula defined in UpdateBoostFactors method when maxboost is 1
+        /// This test ensures that Boost Factors values are calculated as per the formula and updated accordingly.
+        /// </summary>
         [TestMethod]
         [TestCategory("UnitTest")]
         [TestCategory("Prod")]
@@ -127,18 +142,22 @@ namespace UnitTestsProject
             mem.HtmConfig.NumColumns = 10;
 
             double[] minActiveDutyCycles = new double[10];
+            // Intializing minActiveDutyCycles array of size 10 with value 1
             ArrayUtils.InitArray(minActiveDutyCycles, 1);
             mem.HtmConfig.MinActiveDutyCycles = minActiveDutyCycles;
 
             double[] activeDutyCycles = new double[10];
+            // Intializing activeDutyCycles array of size 10 with value 1
             ArrayUtils.InitArray(activeDutyCycles, 1);
             mem.HtmConfig.ActiveDutyCycles = activeDutyCycles;
-
+            // Expected Boost Factors values are calculated manually using the formula boost = (1-maxBoost)/minDuty * activeDutyCycle + maxBoost.
             double[] ExpectedBoostFactors = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            // executing UpdateBoostFactors method with mem connection
             sp.UpdateBoostFactors(mem);
             double[] boostFactors = mem.BoostFactors;
             for (int i = 0; i < boostFactors.Length; i++)
             {
+                // Veriying absolute values of manually calculated Boost Factors vales and Boost Factor values from UpdateBoostFactors method
                 Assert.IsTrue(Math.Abs(ExpectedBoostFactors[i] - boostFactors[i]) <= 0.1D);
             }
         }
